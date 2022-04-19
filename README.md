@@ -45,5 +45,6 @@
   * `btc` - курс биткойн
 
 ## Полезная информация
+* [Подробная инструкция установки на телефон (Android)](https://telegra.ph/Pomoshchnik-v-Telegram-08-17)
 * [Оригинальнальный репозиторий](https://github.com/awitwicki/kodzu_thon)
 * [awitwicki](https://github.com/awitwicki)
