@@ -47,6 +47,7 @@ async def help(event: events.NewMessage.Event):
         '`!f {text}` - анимация текста,\n' \
         '`!a {text or [ответ на сообщение]}` - текст в голосовое сообщение,\n' \
         '`!v {text or [ответ на сообщение]}` - текст в видио сообщение,\n' \
+        '`!inv {video}` - видио в кружочек (для лучшего отправлять в соотношении сторон 1:1,\n' \
         '`!d {text or [ответ на сообщение]}` - текст в голосовое сообщение с фильтром демон,\n' \
         '`btc` - курс биткойна.'
 
@@ -355,6 +356,22 @@ async def handler(event: events.NewMessage.Event):
     except Exception as e:
         print(e)
 
+#in video note
+@client.on(events.NewMessage(pattern='^!inv', outgoing=True))
+async def handler(event: events.NewMessage.Event):
+    filename = "media/vid_temp.mp4"
+    exportname = "media/vid.mp4"
+    chat = await event.get_chat()
+    try:
+        async with client.action(chat, 'record-round'):
+            await event.delete()
+            await event.message.download_media(filename, progress_callback=speech.callback)
+            os.system(f"ffmpeg -i {filename} -r 15 -s 360x360 -strict -2 {exportname}")
+            await client.send_file(chat, 'media/vid.mp4', reply_to = event.message.reply_to_msg_id, video_note=True)
+            os.remove(filename)
+            os.remove(exportname)
+    except Exception as e:
+        print(e)
 
 #demon voice note
 @client.on(events.NewMessage(pattern='^!d', outgoing=True))

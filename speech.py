@@ -9,7 +9,9 @@ def try_delete(filename):
     except Exception as e:
         print(f'e')
 
-
+def callback(current, total):
+    dwn_prog = '{:.2%}'.format(current / total)
+    
 def get_waveform(_min, _max, count):
     return [random.randrange(_min, _max, 1) for _ in range(count)]
 
